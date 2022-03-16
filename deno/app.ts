@@ -1,4 +1,4 @@
-const express = require("express");
+import { opine as express } from "./deps.ts";
 
 const app = express();
 
@@ -18,6 +18,6 @@ app.get("/dados/:nome/:cargo", function(req, res) {
     res.send("Olá sr(a)"+req.params.nome+", seu cargo é "+req.params.cargo);
 });
 
-app.listen(8081, function() {
+app.listen(8080, function() {
   console.log("Servidor funcionando");
 });
