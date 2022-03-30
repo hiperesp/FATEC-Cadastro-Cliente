@@ -7,15 +7,15 @@ app.get("", function(req, res) {
 });
 
 app.get("/contato", function(req, res) {
-    res.send("Contato");
+  res.send("Contato");
 });
 
 app.get("/produto", function(req, res) {
-    res.send("Produto");
+  res.send("Produto");
 });
 
 app.get("/dados/:nome/:cargo", function(req, res) {
-    res.send("Olá sr(a)"+req.params.nome+", seu cargo é "+req.params.cargo);
+  res.send("Olá sr(a)"+req.params.nome+", seu cargo é "+req.params.cargo);
 });
 
 app.listen(8081, function() {
