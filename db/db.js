@@ -6,10 +6,12 @@ async function connect() {
     global.connection = await mysql.createConnection({
         host: 'localhost',
         user: 'root',
-        password: '',
-        database: 'test'
+        password: 'root',
+        database: 'fateczl_web_db'
     });
     console.log("Conectou no MySQL!");
+
+    await createStructUsuario();
 
     return global.connection;
 }
@@ -39,6 +41,19 @@ async function deleteUsuario(id) {
     const sql = "DELETE FROM usuario WHERE id = ?";
     const values = [ id ];
     return await conn.query(sql, values);
+}
+
+async function createStructUsuario() {
+    const conn = await connect();
+    const sql = `
+        CREATE TABLE IF NOT EXISTS usuario (
+            id INT NOT NULL AUTO_INCREMENT,
+            nome VARCHAR(255) NOT NULL,
+            senha VARCHAR(255) NOT NULL,
+            PRIMARY KEY (id)
+        )
+    `;
+    return await conn.query(sql);
 }
 
 module.exports = {
