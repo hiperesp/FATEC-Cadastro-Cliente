@@ -1,23 +1,19 @@
-const express = require("express");
+const express       = require("express");
+const ejs           = require('ejs');
+const path          = require('path');
+const bodyParser    = require('body-parser');
+const consign       = require('consign');
 
 const app = express();
 
-app.get("", function(req, res) {
-  res.send("Bem-Vindo ao meu app");
-});
+app.engine('html', ejs.renderFile);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/view/'));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+consign().include('controller/routes').into(app);
 
-app.get("/contato", function(req, res) {
-  res.send("Contato");
-});
-
-app.get("/produto", function(req, res) {
-  res.send("Produto");
-});
-
-app.get("/dados/:nome/:cargo", function(req, res) {
-  res.send("Olá sr(a)"+req.params.nome+", seu cargo é "+req.params.cargo);
-});
-
-app.listen(8081, function() {
-  console.log("Servidor funcionando");
+app.listen(8081, function(){
+    console.log("Servidor funcionando na url http://localhost:8081");
 });
