@@ -1,4 +1,5 @@
-const usuarioDB = require('./db')
+const usuarioDB = require('../../controller/SQL/db');
+const { ocultarSenha } = require('../components/seguranca');
 
 async function selectUsuario(){
     const conn = await usuarioDB.connect();
@@ -35,4 +36,13 @@ async function getUsuarioId(id){
     else return null;
 }
 
-module.exports = {selectUsuario, insertUsuario, deleteUsuario, updateUsuario, getUsuarioId};
+async function login(nome, senha){
+    const conn = await usuarioDB.connect();
+    const sql = 'SELECT * FROM usuario where nome = ? AND senha = ?;';
+    const values = [nome, ocultarSenha(senha)];
+    const [rows] = await conn.query(sql, values);
+    if(rows.length > 0) return rows[0];
+    else return null;
+}
+
+module.exports = {selectUsuario, insertUsuario, deleteUsuario, updateUsuario, getUsuarioId, login};

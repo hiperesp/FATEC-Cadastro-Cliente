@@ -1,10 +1,14 @@
-function ocultarsenha(senha){
-    //npm install sha1 --- api
-    var sha1 = require('sha1');
-    console.log(senha);
-    var hash = sha1(senha);
-    console.log(hash);
-    return(hash);
+const sha1 = require('sha1');
+
+function autenticar(request, response, next) {
+    if (request.isAuthenticated()) {
+        return next();
+    }
+    response.redirect('/login');
 }
 
-module.exports = {ocultarsenha};
+function ocultarSenha(senha){
+    return sha1(senha);
+}
+
+module.exports = { ocultarSenha, autenticar};
